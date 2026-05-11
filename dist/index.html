@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Учёт регулярных платежей и ближайших списаний.">
+  <title>Сальдо — учёт подписок</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <header class="top"><div class="frame brand"><span class="brand-icon" aria-hidden="true">₽</span> Сальдо</div></header>
+  <main class="frame">
+    <header class="intro">
+      <div><h1>Мои подписки</h1><p>Регулярные платежи и ближайшие списания</p></div>
+      <button class="primary" id="add">＋ Добавить подписку</button>
+    </header>
+    <section class="metrics" aria-label="Сводка">
+      <article><span>В среднем за месяц</span><strong id="monthly">—</strong></article>
+      <article><span>Прогноз на год</span><strong id="yearly">—</strong></article>
+      <article><span>В ближайшие 7 дней</span><strong id="upcoming">—</strong></article>
+    </section>
+    <section class="panel" aria-labelledby="list-title">
+      <div class="panel-head"><h2 id="list-title">Подписки <span id="count"></span></h2>
+        <label><span class="sr">Поиск по названию</span><input type="search" id="search" placeholder="Поиск по названию"></label>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Сервис</th><th>Сумма</th><th>Следующее списание</th><th><span class="sr">Действия</span></th></tr></thead><tbody id="rows"></tbody></table></div>
+      <p id="empty" hidden></p>
+    </section>
+    <p class="note">Данные хранятся в этом браузере.</p>
+    <p class="sr" id="status" role="status"></p>
+  </main>
+  <dialog id="editor">
+    <form id="form">
+      <h2 id="form-title">Подписка</h2>
+      <label>Название <input name="name" required maxlength="60" autocomplete="off"></label>
+      <label>Категория <select name="category"><option>Развлечения</option><option>Работа</option><option>Связь</option><option>Другое</option></select></label>
+      <div class="form-grid">
+        <label>Сумма, ₽ <input name="price" type="number" min="0.01" max="9999999" step="0.01" required inputmode="decimal"></label>
+        <label>Период <select name="cycle"><option value="month">Месяц</option><option value="year">Год</option></select></label>
+      </div>
+      <label>Дата платежа <input name="date" type="date" min="2000-01-01" max="2099-12-31" required></label>
+      <p class="error" id="form-error" role="alert" hidden></p>
+      <div class="actions"><button class="danger" id="remove" type="button" hidden>Удалить</button><button id="cancel" type="button">Отмена</button><button class="primary" type="submit">Сохранить</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
